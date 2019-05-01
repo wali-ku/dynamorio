@@ -5922,6 +5922,9 @@ mangle_indirect_branch_in_trace(dcontext_t *dcontext, instrlist_t *trace,
                                 instr_t *targeter, app_pc next_tag, uint next_flags,
                                 instr_t **delete_after /*OUT*/, instr_t *end_instr)
 {
+    print_file(STDOUT, "REACHED INDIRECT JUMP\nBEFORE:\n");
+    instrlist_disassemble(dcontext, next_tag, trace, STDOUT);
+
     int added_size = 0;
 #ifdef X86
     instr_t *next = instr_get_next(targeter);
@@ -6346,6 +6349,9 @@ fixup_last_cti(dcontext_t *dcontext, instrlist_t *trace, app_pc next_tag, uint n
         }
     });
 #endif
+
+    print_file(STDOUT, "AFTER:\n");
+    instrlist_disassemble(dcontext, next_tag, trace, STDOUT);
 
     ASSERT(added_size < TRACE_CTI_MANGLE_SIZE_UPPER_BOUND);
     return added_size;

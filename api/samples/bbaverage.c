@@ -76,8 +76,10 @@ event_basic_block(void *drcontext, void *tag, instrlist_t *bb,
     /* count the number of instructions in this block */
     for (instr = instrlist_first(bb); instr != NULL; instr = instr_get_next(instr)) {
         num_instructions++;
-	if (instr_is_mbr(instr))
+	if (instr_is_mbr(instr)) {
+        //instrlist_disassemble(drcontext, tag, bb, STDOUT);
 		num_idr_jumps++;
+    }
     }
     /* update the as-built counts */
     dr_mutex_lock(as_built_lock);
